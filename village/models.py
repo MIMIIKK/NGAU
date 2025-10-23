@@ -135,18 +135,51 @@ class Gallery(models.Model):
 
 class Testimonial(models.Model):
     """
-    Visitor testimonials
+    Visitor testimonials for specific items in each section
     """
+    SECTION_CHOICES = [
+        ('cultural', 'Cultural Events'),
+        ('food', 'Food Items'),
+        ('lifestyle', 'Lifestyle'),
+        ('gallery', 'Gallery'),
+    ]
+
     name = models.CharField(_('name'), max_length=100)
     country = models.CharField(_('country'), max_length=100)
     message = models.TextField(_('message'))
     photo = models.ImageField(_('photo'), upload_to='testimonials/', blank=True, null=True)
+    section = models.CharField(_('section'), max_length=50, choices=SECTION_CHOICES)
+    
+    # NEW FIELD: links testimonial to a specific item
+    item_id = models.PositiveIntegerField(_('item ID'))
+
     created_at = models.DateTimeField(_('created at'), auto_now_add=True)
     is_featured = models.BooleanField(_('is featured'), default=False)
-    
+
     class Meta:
         verbose_name = _('testimonial')
         verbose_name_plural = _('testimonials')
-    
+
     def __str__(self):
-        return f"{self.name} from {self.country}"
+        return f"{self.name} from {self.country} ({self.section}, Item ID: {self.item_id})"
+from django.db import models
+
+class HighlightItem(models.Model):
+    CATEGORY_CHOICES = [
+        ("tradition", "Tradition"),
+        ("event", "Cultural Event"),
+        ("homestay", "Homestay"),
+        ("gallery", "Gallery"),
+    ]
+
+    title = models.CharField(max_length=200)
+    description = models.TextField()
+    category = models.CharField(max_length=50, choices=CATEGORY_CHOICES)
+    image = models.ImageField(upload_to="highlights/", blank=True, null=True)
+    path = models.CharField(max_length=200, help_text="Frontend path to navigate")
+    featured = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.title
+

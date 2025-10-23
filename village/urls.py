@@ -2,7 +2,7 @@ from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from .views import (
     CategoryViewSet, CulturalEventViewSet, FoodItemViewSet,
-    LifestyleElementViewSet, OkBajiStoryViewSet, GalleryViewSet, TestimonialViewSet
+    LifestyleElementViewSet, OkBajiStoryViewSet, GalleryViewSet, TestimonialViewSet, HighlightListAPIView
 )
 
 router = DefaultRouter()
@@ -16,4 +16,5 @@ router.register('testimonials', TestimonialViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
+    path('highlights/', HighlightListAPIView.as_view(), name='highlight-list'),
 ]

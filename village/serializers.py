@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Category, CulturalEvent, FoodItem, LifestyleElement, OkBajiStory, Gallery, Testimonial
+from .models import Category, CulturalEvent, FoodItem, HighlightItem, LifestyleElement, OkBajiStory, Gallery, Testimonial
 
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
@@ -38,4 +38,12 @@ class GallerySerializer(serializers.ModelSerializer):
 class TestimonialSerializer(serializers.ModelSerializer):
     class Meta:
         model = Testimonial
-        fields = '__all__'
+        fields = ['id', 'name', 'message', 'section', 'item_id', 'is_featured', 'created_at']
+        read_only_fields = ['id', 'is_featured', 'created_at'] 
+
+class HighlightItemSerializer(serializers.ModelSerializer):
+    image = serializers.ImageField(read_only=True)
+
+    class Meta:
+        model = HighlightItem
+        fields = ["id", "title", "description", "category", "image", "path", "featured"]

@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure--s)1#elrc-ri2#e9wl71*wm=l9q#$6$dk%0#wop@-5_uzuq7z#
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["192.168.1.5", "localhost", "127.0.0.1"]
 
 
 # Application definition
@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework_simplejwt',
     'django_filters',
+    'django_extensions',
 
     # local apps
     'users',
@@ -162,12 +163,20 @@ REST_FRAMEWORK = {
 
 # JWT settings
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=1),
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
     'ROTATE_REFRESH_TOKENS': True,
 }
 
 # CORS settings
 CORS_ALLOWED_ORIGINS = [
-    'http://localhost:3000',
+    'http://localhost:5173',
+    'http://127.0.0.1:5173',
+    'http://192.168.1.5:5173',
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    'http://localhost:5173',
+    'http://127.0.0.1:5173',
+    'http://192.168.1.5:5173',
 ]

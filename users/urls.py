@@ -3,9 +3,9 @@ from rest_framework.routers import DefaultRouter
 from .views import UserViewSet, RegisterView
 
 router = DefaultRouter()
-router.register('', UserViewSet)
+router.register(r'profiles', UserViewSet, basename='user')  # 👈 better
 
 urlpatterns = [
-    path('', include(router.urls)),
     path('register/', RegisterView.as_view(), name='auth_register'),
+    path('', include(router.urls)),
 ]
